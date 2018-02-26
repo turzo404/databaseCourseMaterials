@@ -1,0 +1,479 @@
+
+<!-- saved from url=(0052)http://ugweb.cs.ualberta.ca/~c391/manual/chapt2.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title> ORACLE Architecture and Terminology </title>
+
+
+</head><body>
+<center>
+<h1> ORACLE Architecture and Terminology </h1>
+</center>
+
+<hr size="6" align="centre">
+
+<p>
+This section will provide a basic understanding of ORACLE including the
+concepts and terminology of the ORACLE Server. It is important that you
+read through this section to familiarize yourself with the concepts and
+terminology to be used throughout this manual. Most of the information
+contained in this section is DIRECTLY extracted from ``ORACLE7 Server 
+Concepts Manual'' and all credit should be attributed to ORACLE. 
+</p>
+
+<p>
+Before you can begin to use ORACLE, you must have a basic understanding of
+the architecture of ORACLE to help you start thinking about an ORACLE
+database in the correct conceptual manner.
+</p>
+
+<p>
+Figure 1 illustrates a typical variation of ORACLE's memory and process structures;
+some of the memory structures and processes in this diagram are discussed in
+the following section.  For more information on these memory structures and processes,
+see page 1-15 of ``ORACLE7 Server Concepts Manual.''
+</p>
+
+<img src="./ORACLE Architecture and Terminology_files/fig1.gif">
+
+<h5 align="centre">Figure 1. ORACLE Architecture </h5>
+
+
+<h2> <a name="section21"> Memory Structures and Processes </a> </h2>
+
+<p>
+     The mechanisms of ORACLE execute by using memory structures and
+     processes. All memory structures exist in the main memory of the
+     computers that constitute the database system. Processes are jobs
+     or tasks that work in the memory of these computers.
+</p>
+
+<h3> <a name="section211"> Memory Structures </a> </h3>
+
+<p>
+	 ORACLE creates and uses memory structures to complete several jobs.
+	 For example, memory is used to store program code being executed
+	 and data that is shared among users. Several basic memory structures
+	 are associated with ORACLE: the system global area (which includes
+	 the database and redo log buffers, and the shared pool) and the 
+	 program global area.
+</p>
+
+<p>
+         System Global Area (SGA) is a shared memory region allocated by
+	 ORACLE that contains data and control information for one ORACLE
+	 instance.
+</p>
+
+<p>
+	 An ORACLE instance contains the SGA and the background processes.
+</p>
+
+<p>
+	 The SGA is allocated when an instance starts and deallocated when the 
+	 instance shuts down. Each instance that is started has its own SGA.
+</p>
+
+<p>
+	 The Program Global Area (PGA) is a memory buffer that contains data
+	 and control information for a server process. A PGA is created by 
+	 ORACLE when a server process is started. The information in a PGA
+	 depends on the configuration of ORACLE.
+</p>
+
+<h3> <a name="section212"> Processes </a> </h3>
+
+<p>
+	 A process is a ``thread of control'' or a mechanism in an operating
+	 system that can execute a series of steps. Some operating systems
+	 use the terms job or task. An ORACLE database system has two general
+	 types of processes: user processes and ORACLE processes.
+</p>
+
+<p>
+	 A user process is created and maintained to execute the software code
+	 of an application program (such as a PRO*C program) or an ORACLE tool
+	 (such as SQL*PLUS). The user process also manages the communication
+	 with the server processes. User processes communicate with the server
+	 processes through the program interface.
+</p>
+
+<p>
+	 ORACLE processes are called by other processes to perform functions
+	 on behalf of the invoking process. ORACLE creates a server process
+	 to handle requests from connected user processes. ORACLE also creates
+	 a set of background processes for each instance (see ``ORACLE7 Server
+	 Concepts Manual'' pages 1-18, 1-19).
+</p>
+
+<h2> <a name="section22"> Database Structures </a> </h2>
+
+<p>
+     The relational model has three major aspects:
+</p>
+
+<dl>
+<dt> Structures 
+</dt><dd> Structures are well-defined objects that store the
+		data of a database. Structures and the data contained
+		within them can be manipulated by operations.
+<br>
+<br>
+
+</dd><dt> Operations 
+</dt><dd> Operations are clearly defined actions that allow
+		users to manipulate the data and structures of a 
+		database. The operations on a database must adhere
+		to a pre-defined set of integrity rules.
+<br>
+<br>
+
+</dd><dt> Integrity Rule 
+</dt><dd> Integrity rules are the laws that govern which
+		operations are allowed on the data and structures
+		of a database. Integrity rules protect the data and
+		the structures of a database.
+</dd></dl>
+
+<p>
+     An ORACLE database has both a physical and a logical structure. By 
+     separating physical and logical database structure, the physical storage
+     of data can be managed without affecting the access to logical storage
+     structures.
+</p>
+
+<h3> <a name="section221"> Logical Database Structure </a> </h3>
+
+         An ORACLE database's logical structure is determined by:
+
+<ul>
+<li> one or more tablespaces. 
+<br>
+<br>
+</li><li> the database's schema objects (e.g., tables, views, indexes, clusters, sequences, stored procedures).
+</li></ul>
+
+<p>
+         The logical storage structures, including tablespaces, segments, and
+	 extents, dictate how the physical space of a database is used. The
+	 schema objects and the relationships among them form the relational
+	 design of a database.
+</p>
+
+<br>
+<b>Tablespaces and Data Files </b>
+
+<p>
+	 Tablespaces are the primary logical storage structures of any ORACLE database.
+	 The usable data of an ORACLE database is logically stored in the
+	 tablespaces and physically stored in the data files associated with
+	 the corresponding tablespace.  Figure 2 illustrates this relationship.
+</p>
+
+<p>
+	 Although databases, tablespaces, data files, and segments are closely
+	 related, they have important differences:
+</p>
+
+<br>
+<dl>
+<dt> databases and tablespaces
+</dt><dd> An ORACLE database is comprised of one or more logical storage units
+     called tablespaces. The  database's data is collectively stored in the
+     database's tablespaces.
+<br>
+<br>
+
+</dd><dt> tablespaces and data files
+</dt><dd> Each tablespace in an ORACLE database is comprised of one or more
+     operating system files called data files. A tablespace's data files
+     physically store the associated database data on disk.
+<br>
+<br>
+
+</dd><dt> databases and data files
+</dt><dd> A database's data is collectively stored in the data files that
+     constitute each tablespace of the database. For example, the simplest 
+     ORACLE database would have one tablespace, with one data file. A more 
+     complicated database might have three tablespaces, each comprised of 
+     two data files (for a total of six data files).
+<br>
+<br>
+
+</dd><dt> schema objects, segments, and tablespaces
+</dt><dd> When a schema object such as a table or index is created, its segment
+     is created within a  designated tablespace in the database.  For
+     example, suppose a table is created in a specific tablespace using the 
+     CREATE TABLE command with the TABLESPACE option. The space for this 
+     table's data segment is allocated in one or more of the data files that 
+     constitute the specified tablespace. An object's segment allocates space 
+     in only one tablespace of a database.
+
+</dd></dl>
+<br>
+
+<img src="./ORACLE Architecture and Terminology_files/fig2.gif">
+<h5 align="centre">Figure 2. Data Files and Tablespaces </h5>
+
+<br>
+<p>
+	A database is divided into one or more logical storage units called
+	tablespaces. A database administrator can use tablespaces to do the
+	following:
+</p>
+
+<ul>
+<li> Control disk space allocation for database data.
+<br>
+<br>
+</li><li> Assign specific space quotas for database users.
+<br>
+<br>
+</li><li> Control availability of data by taking individual tablespaces online or offline.
+<br>
+<br>
+</li><li> Perform partial database backup or recovery operations.
+<br>
+<br>
+</li><li> Allocate data storage across devices to improve performance.
+</li></ul>
+
+<p>
+        Every ORACLE database contains a tablespace named SYSTEM, which is
+	automatically created when the database is created. The SYSTEM 
+	tablespace always contains the data dictionary tables for the entire
+	database.  You can query these data dictionary tables to obtain 
+        pertinent information about the database; for example, the names of 
+        the tables that are owned by you or ones to which you have access.  
+        See Chapter 3 for more information on how to access data dictionary 
+        tables.
+</p>
+
+<p>
+	Data files associated with a tablespace store all the database data in
+	that tablespace. One or more datafiles form a logical unit of database
+	storage called a tablespace. A data file can be associated with only
+	one tablespace, and only one database.
+</p>
+
+<p>
+	After a data file is initially created, the allocated disk space does
+	not contain any data; however, the space is reserved to hold only the
+	data for future segments of the associated tablespace - it cannot store
+	any other program's data. As a segment (such as the data segment for a
+	table) is created and grows in a tablespace, ORACLE uses the free space
+	in the associated data files to allocate extents for the segment.
+</p>
+
+<p>
+	The data in the segments of objects (data segments, index segments,
+	rollback segments, and so on) in a tablespace are physically stored 
+	in one or more of the data files that constitute the tablespace. Note
+	that a schema object does not correspond to a specific data file;
+	rather, a data file is a repository for the data of any object within
+	a specific tablespace. The extents of a single segment can be allocated
+	in one or more data files of a tablespace (see Figure 3); therefore, 
+        an object can ``span'' one or more data files. The database 
+        administrator and end-users cannot control which data file stores an 
+        object.
+</p>
+
+<br>
+<b> Data Blocks, Extents, and Segments </b>
+
+<p>
+ORACLE allocates database space for all data in a database. The units
+of logical database allocations are data blocks, extents, and segments.
+Figure 3 illustrates the relationships between these data structures.
+</p>
+
+<dl>
+<dt> Data Blocks 
+</dt><dd> At the finest level of granularity, an ORACLE database's data is stored 
+     in data blocks (also called logical blocks, ORACLE blocks, or pages).  
+     An ORACLE database uses and allocates free database space in ORACLE data 
+     blocks.  Figure 4 illustrates a typical ORACLE data block.
+<br>
+<br>
+
+</dd><dt> Extents 
+</dt><dd> The next level of logical database space is called an extent. An extent 
+     is a specific number of contiguous data blocks that are allocated for 
+     storing a specific type of information.
+<br>
+<br>
+
+</dd><dt> Segments 
+</dt><dd> The level of logical database storage above an extent is called a 
+     segment. A segment is a set of extents which have been allocated for a 
+     specific type of data structure, and all are stored in the same 
+     tablespace. For example, each table's data is stored in its own data 
+     segment, while each index's data is stored in its own index segment.  
+     ORACLE allocates space for segments in extents. Therefore, when the 
+     existing extents of a segment are full, ORACLE allocates another extent 
+     for that segment.  Because extents are allocated as needed, the extents 
+     of a segment may or may not be contiguous on disk, and may or may not 
+     span files. An extent cannot span files, though.
+</dd></dl>
+
+<img src="./ORACLE Architecture and Terminology_files/fig3.gif">
+<h5 align="centre">Figure 3. The Relationship Among Segments, Extents and Data 
+     Blocks </h5>
+
+<p>
+	ORACLE manages the storage space in the data files of a database in
+	units called data blocks. A data block is the smallest unit of I/O used
+	by a database. A data block corresponds to a block of physical bytes on
+	disk, equal to the ORACLE data block size (specifically set when the
+	database is created - 2048). This block size can differ from the 
+        standard I/O block size of the operating system that executes ORACLE.
+</p>
+
+<p>
+	The ORACLE block format is similar regardless of whether the data block
+	contains table, index, or clustered data.  Figure 4 shows the format of 
+        a data block.
+</p>
+
+
+<img src="./ORACLE Architecture and Terminology_files/fig4.gif">
+<h5 align="centre">Figure 4. Data Block Format </h5>
+
+<br>
+<dl>
+<dt> Header (Common and Variable)
+</dt><dd> The header contains general block information, such as block address,
+     segment type, such as data, index, or rollback. While some block overhead 
+     is fixed in size (about 107 bytes), the total block overhead size is 
+     variable.
+<br>
+<br>
+
+</dd><dt> Table Directory 
+</dt><dd> The table directory portion of the block contains information about the 
+     tables having rows in this block.
+<br>
+<br>
+
+</dd><dt> Row Directory 
+</dt><dd> This portion of the block contains row information about the actual rows 
+     in the block (including addresses for each row piece in the row data 
+     area).  Once the space has been allocated in the row directory of a 
+     block's header, this space is not reclaimed when the row is deleted.
+<br>
+<br>
+
+</dd><dt> Row Data 
+</dt><dd> This portion of the block contains table or index data. Rows can span 
+     blocks.
+<br>
+<br>
+
+</dd><dt> Free Space 
+</dt><dd> Free space is used to insert new rows and for updates to rows that 
+     require additional space (e.g., when a trailing null is updated to a 
+     non-null value). Whether issued insertions actually occur in a given 
+     data block is a function of the value for the space management parameter 
+     PCTFREE and the amount of current free space in that data block.
+<br>
+<br>
+
+</dd><dt> Space Used for Transaction Entries
+</dt><dd> Data blocks allocated for the data segment of a table, cluster, or the 
+     index segment of an index can also use free space for transaction entries.
+</dd></dl>
+
+<p></p>
+	Two space management parameters, PCTFREE and PCTUSED, allow a developer
+	to control the use of free space for inserts of and updates to the rows
+	in data blocks. Both of these parameters can only be specified when 
+	creating or altering tables and clusters (data segments). In addition,
+	the storage parameter PCTFREE can also be specified when creating or
+	altering indicies (index segments).
+<p></p>
+
+<p>
+	The PCTFREE parameter is used to set the percentage of a block to be
+	reserved (kept free) for possible updates to rows that already are
+	contained in that block. For example, assume that you specify the 
+	following parameter within a CREATE TABLE statement:
+</p>
+
+		pctfree 20
+
+<p>
+	This states that 20\% of each data block used for this table's data
+	segment will be kept free and available for possible updates to the
+	existing rows already within each block. 
+</p>
+
+<p>
+	After a data block becomes full, as determined by PCTFREE, the block is
+	not considered for the insertion of new rows until the percentage of
+	the block being used falls below the parameter PCTUSED. Before this
+	value is achieved, the free space of the data block can only be used for
+	updates to rows already contained in the data block. For example, assume
+	that you specify the following parameter within a CREATE TABLE
+	statement:
+</p>
+
+		pctused 40
+
+<p>
+	In this case, a data block used for this table's data segment is not
+	considered for the insertion of any new rows until the amount of used
+	space in the blocks falls to 39\% or less (assuming that the block's 
+        used space has previously reached PCTFREE).
+</p>
+
+<p>
+	No matter what type, each segment in a database is created with at least
+	one extent to hold its data. This extent is called the segment's initial
+	extent. 
+</p>
+
+<p>
+	If the data blocks of a segment's initial extent become full and more
+	space is required to hold new data, ORACLE automatically allocates an
+	incremental extent for that segment. An incremental extent is a 
+	subsequent extent of the same or incremented size of the previous
+	extent in that segment.
+</p>
+
+<p>
+	Every non-clustered table in an ORACLE database has a single data 
+	segment to hold all of its data. The data segment for a table is 
+	indirectly created via the CREATE TABLE/SNAPSHOT command.
+</p>
+
+<p>
+	Storage parameters for a table, snapshot, or cluster control the way
+	that  a data segment's extents are allocated. Setting these storage
+	parameters directly via the CREATE TABLE/SNAPSHOT/CLUSTER or ALTER
+	TABLE/SNAPSHOT/CLUSTER commands affects the efficiency of data retrieval
+	and storage for that data segment.
+</p>
+
+<p>
+	For more information on Data Blocks, Segments and Extents, see ``ORACLE7
+	Server Concepts Manual.''
+</p>
+
+<h3> <a name="section222"> Physical Database Structure </a> </h3>
+
+<p>
+An ORACLE database's physical structure is determined by the operating system 
+files that constitute the database.  Each ORACLE database is comprised of 
+these types of files: one or more data files, two or more redo log files, and 
+one or more control files.  The files of a database provide the actual 
+physical storage for database information.  For more information on these 
+physical storage files, see ``ORACLE7 Server Concepts Manual.''
+</p>
+
+<img src="./ORACLE Architecture and Terminology_files/fig5.gif">
+
+<h5 align="centre">Figure 5. Maintaining the Free Space of Data Blocks
+         with PCTFREE and PCTUSED </h5>
+
+<hr>
+
+</body></html>
