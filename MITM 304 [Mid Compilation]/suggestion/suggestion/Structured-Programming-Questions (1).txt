@@ -1,0 +1,8 @@
+Structured Programming
+
+5 mcq -> return type code     mark-5
+output finding-> 3que        mark-10
+write a program on a given topic(sum of square of odd numbers from 1 to 99) -> mark-5
+what is typecast & dynamic programming? ... -marks-10
+Find the suitable data structure, container, algorithm of a given scenario and explanation?
+marks-10
